@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const emit = defineEmits<{
-    (e: 'onClick', {index, flipped} :{ index: number, flipped: boolean}): void
+    (e: 'onClick', {index, flipped, id} :{ index: number, flipped: boolean, id: number}): void
 }>()
 const props = defineProps({
     index: { type: Number, required: true },
@@ -11,10 +11,10 @@ const props = defineProps({
 </script>
 
 <template>
-    <div @click="$emit('onClick', {index, flipped})"
-        class="card flex flex-col shadow-xl rounded-xl max-w-[168px] min-h-[252px]">
+    <div @click="$emit('onClick', {index, flipped, id})"
+        class="card box-si flex flex-col shadow-xl rounded-xl max-w-[100px] w-full min-h-[150px]">
 
-        <div class="front-side" v-if="flipped">
+        <div class="front-side rounded-xl overflow-hidden" v-if="flipped">
             <img :src="props.frontImage" />
         </div>
         <div v-if="!flipped"
@@ -30,6 +30,7 @@ const props = defineProps({
 <style scoped>
 .card {
     transition: scale ease 0.2s;
+    box-sizing: border-box;
 }
 
 .card:hover {
