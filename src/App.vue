@@ -9,7 +9,8 @@ import { getNumberOfCards, getRandomInt } from './utils/game_settings';
 type difficulty = 'easy' | 'medium' | 'hard';
 
 const characters = ref<CharacterCard[]>([]);
-const openCards = ref<number[]>([]);
+const selectedCards = ref<{ id: number, index: number }[]>([]);
+const matchedCards = ref<{ id: number, index: number }[]>([]);
 const variant = "portrait_fantastic"
 onMounted(() => {
   initGame('hard')
@@ -29,25 +30,32 @@ const shuffleCards = (cards: any[]) => {
   return [...cards, ...cards].sort(() => Math.random() - 0.5);
 }
 
-const revealCard = ({ index, flipped, id }: { index: number, flipped: boolean, id: number }) => {
-
+const selectCard = ({ flipped, id, index }: { flipped: boolean, id: number, index: number }) => {
   if (characters.value[index].flipped) return;
-  if (openCards.value.length < 2) {
-    characters.value[index].flipped = !flipped;
-    openCards.value.push(id);
-  } else {
-    validateGameOver(openCards.value)
-      ? (() => {
-        openCards.value = [];
-      })()
-      : setTimeout(() => {
-        characters.value = flipAllCards(characters.value, false);
-        openCards.value = [];
-      }, 1500);
-  };
+  if (selectedCards.value.length < 2) {
+    selectedCards.value.push({ index, id });
+    flipCard(index, !flipped);
+  }
+  if (selectedCards.value.length === 2) {
+    if (selectedCards.value[0].id !== selectedCards.value[1].id) {
+      setTimeout(() => {
+        selectedCards.value.forEach(selected => {
+          flipCard(selected.index, false);
+        });
+        selectedCards.value = [];
+      }, 900);
+    } else {
+      matchedCards.value.push(...selectedCards.value);
+      selectedCards.value = [];
+    }
+  }
 }
 
-const validateGameOver = (openCards: number[]) => openCards[0] === openCards[1];
+const flipCard = (index: number, flipped: boolean) => {
+  characters.value[index].flipped = flipped;
+}
+
+const validateGameOver = (selectedCards: number[]) => selectedCards[0] === selectedCards[1];
 
 const flipAllCards = (characters: Characters[], flipped: boolean) => (characters.map(character => ({
   ...character,
@@ -63,16 +71,15 @@ const flipAllCards = (characters: Characters[], flipped: boolean) => (characters
   <main class="container mx-auto relative">
     <ul class="flex flex-wrap gap-4 justify-center">
       <li class="" v-for="{ name, id, thumbnail: { path, extension }, flipped }, index in characters" :key="id">
-        <Card @on-click="revealCard" :front-image="`${path}/${variant}.${extension}`" :flipped="flipped" :id="id"
-          :index="index" />
+        <Card @on-click="selectCard" :front-image="`${path}/${variant}.${extension}`" :flipped="flipped" :id="id"
+          :index="index" :name="name" />
       </li>
     </ul>
   </main>
 </template>
 
 <style>
-body,
-* {
+body{
   background-color: #2d2d30;
   margin: 0;
   padding: 0;

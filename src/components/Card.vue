@@ -1,21 +1,28 @@
 <script setup lang="ts">
+import type { CharacterCard } from '@/interface/Characters';
+
 const emit = defineEmits<{
-    (e: 'onClick', {index, flipped, id} :{ index: number, flipped: boolean, id: number}): void
+    (e: 'onClick', card: { flipped: boolean, id: number, index: number }): void
 }>()
 const props = defineProps({
     index: { type: Number, required: true },
     id: { type: Number, required: true },
     frontImage: { type: String, required: true },
-    flipped: { type: Boolean, required: true }
+    flipped: { type: Boolean, required: true },
+    name: { type: String, required: true },
 })
 </script>
 
 <template>
-    <div @click="$emit('onClick', {index, flipped, id})"
+    <div @click="$emit('onClick', { index, flipped, id })"
         class="card box-si flex flex-col shadow-xl rounded-xl max-w-[100px] w-full min-h-[150px]">
 
-        <div class="front-side rounded-xl overflow-hidden" v-if="flipped">
+        <div class="front-side rounded-xl overflow-hidden relative" v-if="flipped">
             <img :src="props.frontImage" />
+            <div class="card-footer px-1 absolute bottom-0 w-full h-14 bg-[#565679] text-neutral-100 font-semibold border-red-900 rounded-bl-xl rounded-br-xl border-solid border-2">
+                <p class="text-xs">{{ name }}</p>
+            </div>
+
         </div>
         <div v-if="!flipped"
             class="flex flex-col flex-1 bg-gradient-to-r from-[#ed1d24] via-red-500 to-[#ce5cd8] p-1 rounded-xl">
