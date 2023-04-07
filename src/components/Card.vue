@@ -19,8 +19,8 @@ const props = defineProps({
 
         <div class="front-side rounded-xl overflow-hidden relative" v-if="flipped">
             <img :src="props.frontImage" />
-            <div class="card-footer px-1 absolute bottom-0 w-full h-14 bg-[#565679] text-neutral-100 font-semibold border-red-900 rounded-bl-xl rounded-br-xl border-solid border-2">
-                <p class="text-xs">{{ name }}</p>
+            <div class="card-footer absolute shadow-[-2px_2px_1px_1px_black] bottom-2 right-0 bg-[#FFDE00] font-semibold border-neutral-900 border-solid border-2">
+                <p class="text-sm text-end px-1">{{ name }}</p>
             </div>
 
         </div>
@@ -65,6 +65,10 @@ const props = defineProps({
 
 .back-side img {
     width: 80%;
+}
+
+.card-footer {
+    text-transform: uppercase;
 }
 
 /* .card .front-side {

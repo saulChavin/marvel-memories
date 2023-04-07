@@ -1,87 +1,42 @@
 <script setup lang="ts">
-import HeaderMenu from './components/HeaderMenu.vue';
-import Card from './components/Card.vue';
-import { onMounted, ref } from 'vue'
-import { getCharacters } from './api/characters';
-import type { CharacterCard, Characters } from './interface/Characters';
-import { getNumberOfCards, getRandomInt } from './utils/game_settings';
+import HeaderMenu from '@/components/HeaderMenu.vue';
+import Button from '@/components/Button.vue';
+import BoardView from '@/views/BoardView.vue';
+import { ref } from 'vue';
+import type { difficultyType } from '@/interface/Game';
 
-type difficulty = 'easy' | 'medium' | 'hard';
+const difficultyState = ref<difficultyType | null>(null);
 
-const characters = ref<CharacterCard[]>([]);
-const selectedCards = ref<{ id: number, index: number }[]>([]);
-const matchedCards = ref<{ id: number, index: number }[]>([]);
-const variant = "portrait_fantastic"
-onMounted(() => {
-  initGame('hard')
-});
-
-const initGame = async (gameDifficulty: difficulty) => {
-  const limit = getNumberOfCards(gameDifficulty);
-  const offset = getRandomInt(1, 1562);
-  const charactersRes = await getCharacters({ offset, limit })
-  characters.value = flipAllCards(shuffleCards(charactersRes), true);
-  setTimeout(() => {
-    characters.value = flipAllCards(characters.value, false);
-  }, 2000)
+const setDifficulty = (difficulty: difficultyType) => {
+  difficultyState.value = difficulty;
 }
-
-const shuffleCards = (cards: any[]) => {
-  return [...cards, ...cards].sort(() => Math.random() - 0.5);
-}
-
-const selectCard = ({ flipped, id, index }: { flipped: boolean, id: number, index: number }) => {
-  if (characters.value[index].flipped) return;
-  if (selectedCards.value.length < 2) {
-    selectedCards.value.push({ index, id });
-    flipCard(index, !flipped);
-  }
-  if (selectedCards.value.length === 2) {
-    if (selectedCards.value[0].id !== selectedCards.value[1].id) {
-      setTimeout(() => {
-        selectedCards.value.forEach(selected => {
-          flipCard(selected.index, false);
-        });
-        selectedCards.value = [];
-      }, 900);
-    } else {
-      matchedCards.value.push(...selectedCards.value);
-      selectedCards.value = [];
-    }
-  }
-}
-
-const flipCard = (index: number, flipped: boolean) => {
-  characters.value[index].flipped = flipped;
-}
-
-const validateGameOver = (selectedCards: number[]) => selectedCards[0] === selectedCards[1];
-
-const flipAllCards = (characters: Characters[], flipped: boolean) => (characters.map(character => ({
-  ...character,
-  flipped
-})))
 
 </script>
  
 <template>
-  <header>
+  <header class="w-full">
     <HeaderMenu />
   </header>
   <main class="container mx-auto relative">
-    <ul class="flex flex-wrap gap-4 justify-center">
-      <li class="" v-for="{ name, id, thumbnail: { path, extension }, flipped }, index in characters" :key="id">
-        <Card @on-click="selectCard" :front-image="`${path}/${variant}.${extension}`" :flipped="flipped" :id="id"
-          :index="index" :name="name" />
-      </li>
-    </ul>
+    <div v-if="!difficultyState" class="flex flex-col gap-4 max-w-xs px-2 mx-auto font-semibold">
+      <button @click="setDifficulty('easy')" class="bg-cyan-700 rounded-md py-1 hover:bg-cyan-600">Fácil</button>
+      <button @click="setDifficulty('medium')"
+        class="bg-orange-400 rounded-md py-1 hover:bg-amber-600">Intermedio</button>
+      <button @click="setDifficulty('hard')" class="bg-red-500 rounded-md py-1 hover:bg-red-600">Dificil</button>
+    </div>
+
+    <div v-if="difficultyState">
+      <BoardView :difficulty="difficultyState"/>
+    </div>
+
   </main>
 </template>
 
 <style>
-body{
+body {
   background-color: #2d2d30;
   margin: 0;
   padding: 0;
+  font-family: 'Comic Neue';
 }
 </style>
