@@ -5,6 +5,7 @@ import { getCharacters } from '@/api/characters';
 import type { CharacterCard, Characters } from '@/interface/Characters';
 import { getNumberOfCards, getRandomInt } from '@/utils/game_settings';
 import type { difficultyType } from '@/interface/Game';
+import { useSettingsStore } from '@/stores/settings';
 //@ts-ignore
 import confetti from "https://cdn.skypack.dev/canvas-confetti";
 
@@ -20,6 +21,7 @@ const variant = "portrait_fantastic"
 const characters = ref<CharacterCard[]>([]);
 const selectedCards = ref<{ id: number, index: number }[]>([]);
 const matchedCards = ref<{ id: number, index: number }[]>([]);
+const settingsStore = useSettingsStore();
 
 const initGame = async (gameDifficulty: difficultyType) => {
     const limit = getNumberOfCards(gameDifficulty);
@@ -52,8 +54,10 @@ const selectCard = ({ flipped, id, index }: { flipped: boolean, id: number, inde
         } else {
             matchedCards.value.push(...selectedCards.value);
             selectedCards.value = [];
-            characters.value.length === matchedCards.value.length
-                && confetti();
+            if (characters.value.length === matchedCards.value.length) {
+                confetti();
+                settingsStore.setGameOver(true);
+            }
         }
     }
 }

@@ -1,8 +1,17 @@
+<script setup lang="ts">
+import { useSettingsStore } from '../stores/settings'
 
+const settingsStore = useSettingsStore();
+</script>
 <template>
     <div class="flex justify-center py-6 mx-auto">
-        <h1 class="text-3xl font-bold text-red-50">
-            Marvel Memories
-        </h1>
+        <div v-if="settingsStore.isGameOver">
+            <button @click="() => {
+                settingsStore.setDifficulty(null);
+                settingsStore.setGameOver(false);
+            }" class="bg-[#FFDE00] p-1 font-[Comic Sans] font-semibold shadow-[-2px_2px_1px_1px_black] uppercase">
+                Jugar de nuevo
+            </button>
+        </div>
     </div>
 </template>
