@@ -1,5 +1,5 @@
 import type { IResponse } from '../interface/Response';
-const BASE_URL = "http://gateway.marvel.com/v1/public"
+const BASE_URL = "https://gateway.marvel.com/v1/public"
 export const fetchData = async <T,>(targetUrl: string, query: string[]): Promise<IResponse<T>> => {
 
     const ts = new Date().getTime();
