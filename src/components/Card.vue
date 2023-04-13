@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CharacterCard } from '@/interface/Characters';
+import Cartela from './Cartela.vue';
 
 const emit = defineEmits<{
     (e: 'onClick', card: { flipped: boolean, id: number, index: number }): void
@@ -19,9 +20,7 @@ const props = defineProps({
 
         <div class="front-side rounded-xl overflow-hidden relative" v-if="flipped">
             <img :src="props.frontImage" />
-            <div class="card-footer absolute shadow-[-2px_2px_1px_1px_black] bottom-2 right-0 bg-[#FFDE00] font-semibold border-neutral-900 border-solid border-2">
-                <p class="text-sm text-end px-1">{{ name }}</p>
-            </div>
+           <Cartela :name="name"/>
 
         </div>
         <div v-if="!flipped"
@@ -65,10 +64,6 @@ const props = defineProps({
 
 .back-side img {
     width: 80%;
-}
-
-.card-footer {
-    text-transform: uppercase;
 }
 
 /* .card .front-side {

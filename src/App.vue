@@ -11,9 +11,9 @@ const difficultyStore = useSettingsStore();
   <header class="w-full">
     <HeaderMenu />
   </header>
-  <main class="container mx-auto relative h-fit flex flex-col gap-1">
-    <div v-if="!difficultyStore.difficulty" class="flex gap-1 px-2 mx-auto justify-center font-semibold w-full h-full">
-      <div class="easy flex-1 h-52 w-52 bg-orange-600">
+  <main class="container mx-auto relative h-fit flex flex-1 flex-col gap-1">
+    <div v-if="!difficultyStore.difficulty" class="max-w-screen-md flex gap-1 px-2 mx-auto justify-center font-semibold w-full h-full">
+      <div @click="difficultyStore.setDifficulty('easy')" class="easy flex-1 h-52 w-52 bg-orange-600">
         Facil
       </div>
       <div class="medium flex-1 h-52 w-52 bg-slate-700">
@@ -23,16 +23,7 @@ const difficultyStore = useSettingsStore();
         Dificil
       </div>
     </div>
-    <div v-if="!difficultyStore.difficulty" class="flex gap-1 px-2 mx-auto justify-center font-semibold w-full h-full">
-      <div class="flex-1 another h-52 w-52 bg-sky-700 fle">
-        Intermedio
-      </div>
-      <div class="another2 h-52 w-52 bg-rose-500 flex-1">
-        Dificil
-      </div>
-    </div>
-
-    <div v-if="difficultyStore.difficulty">
+    <div v-if="difficultyStore.difficulty" class="flex gap-1 px-2 mx-auto justify-center font-semibold w-full h-full">
       <BoardView :difficulty="difficultyStore.difficulty" />
     </div>
 
@@ -41,28 +32,26 @@ const difficultyStore = useSettingsStore();
 
 <style>
 .easy {
-  clip-path: polygon(0% 0%, 80% 0%, 100% 90%, 0% 100%);
+  clip-path: polygon(0% 0%, 80% 0%, 100% 100%, 0% 100%);
+  background: url(http://i.annihil.us/u/prod/marvel/i/mg/c/c0/4c7c63dd70fe7/standard_fantastic.jpg);
+  background-position: center;
+  background-size: cover;
 }
 
 .medium {
   margin-left: -6%;
-  clip-path: polygon(0 0, 100% 0%, 80% 85%, 20% 90%);
+  clip-path: polygon(0 0, 100% 0%, 80% 100%, 20% 100%);
+  background: url(https://i.annihil.us/u/prod/marvel/i/mg/2/70/50febd8be6b5d/standard_fantastic.jpg);
+  background-position: center;
+  background-size: cover;
 }
 
 .hard {
   margin-left: -6%;
-  clip-path: polygon(20% 0, 100% 0%, 100% 100%, 0% 85%);
-}
-
-.another {
-  /* margin-left: 5%; */
-  margin-top: -4%;
-  clip-path: polygon(0 13%, 100% 0%, 100% 100%, 0 100%);
-}
-
-.another2 {
-  margin-top: -5%;
-  clip-path: polygon(0 4%, 22% 0%, 100% 100%, 0 100%);
+  clip-path: polygon(20% 0, 100% 0%, 100% 100%, 0% 100%);
+  background: url(https://i.annihil.us/u/prod/marvel/i/mg/8/03/510c08f345938/standard_fantastic.jpg);
+  background-position: right;
+  background-size: cover;
 }
 
 body {
@@ -77,5 +66,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100%;
 }
 </style>
