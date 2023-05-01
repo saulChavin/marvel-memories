@@ -50,7 +50,6 @@ const selectDificulty = (difficulty: "easy" | "medium" | "hard") => {
 <style>
 .easy {
   clip-path: polygon(0% 0%, 80% 0%, 100% 100%, 0% 100%);
-  background: url(http://i.annihil.us/u/prod/marvel/i/mg/c/c0/4c7c63dd70fe7/standard_fantastic.jpg);
   background-position: center;
   background-size: cover;
 }
@@ -58,7 +57,6 @@ const selectDificulty = (difficulty: "easy" | "medium" | "hard") => {
 .medium {
   margin-left: -6%;
   clip-path: polygon(0 0, 100% 0%, 80% 100%, 20% 100%);
-  background: url(https://i.annihil.us/u/prod/marvel/i/mg/2/70/50febd8be6b5d/standard_fantastic.jpg);
   background-position: center;
   background-size: cover;
 }
@@ -66,7 +64,6 @@ const selectDificulty = (difficulty: "easy" | "medium" | "hard") => {
 .hard {
   margin-left: -6%;
   clip-path: polygon(20% 0, 100% 0%, 100% 100%, 0% 100%);
-  background: url(https://i.annihil.us/u/prod/marvel/i/mg/8/03/510c08f345938/standard_fantastic.jpg);
   background-position: right;
   background-size: cover;
 }

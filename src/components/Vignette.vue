@@ -12,7 +12,7 @@ const props = defineProps({
 
 <template>
   <div @click="$emit('onClick', difficulty)"
-    :style="{background: `url(${image}) center center / cover)`}"
+    :style="{background: `url(${image}) center center / cover`}"
     :class="`${props.class} contenedor flex-1 h-52 w-52 relative flex items-center justify-center`" role="button">
     <span>
       <Cartela :name="label" class-name="effect3d" />
