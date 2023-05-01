@@ -3,8 +3,31 @@ import HeaderMenu from '@/components/HeaderMenu.vue';
 import Button from '@/components/Button.vue';
 import BoardView from './views/BoardView.vue';
 import { useSettingsStore } from './stores/settings'
+import Vignette from './components/Vignette.vue';
+
+const difficultyLevels = [
+  {
+    name: "easy",
+    label: "Facil",
+    image: "http://i.annihil.us/u/prod/marvel/i/mg/c/c0/4c7c63dd70fe7/standard_fantastic.jpg"
+  },
+  {
+    name: "medium",
+    label: "Medio",
+    image: "https://i.annihil.us/u/prod/marvel/i/mg/2/70/50febd8be6b5d/standard_fantastic.jpg"
+  },
+  {
+    name: "hard",
+    label: "Dificil",
+    image: "https://i.annihil.us/u/prod/marvel/i/mg/8/03/510c08f345938/standard_fantastic.jpg"
+  }
+]
 
 const difficultyStore = useSettingsStore();
+
+const selectDificulty = (difficulty: "easy" | "medium" | "hard") => {
+  difficultyStore.setDifficulty(difficulty);
+}
 </script>
  
 <template>
@@ -12,16 +35,10 @@ const difficultyStore = useSettingsStore();
     <HeaderMenu />
   </header>
   <main class="container mx-auto relative h-fit flex flex-1 flex-col gap-1">
-    <div v-if="!difficultyStore.difficulty" class="max-w-screen-md flex gap-1 px-2 mx-auto justify-center font-semibold w-full h-full">
-      <div @click="difficultyStore.setDifficulty('easy')" class="easy flex-1 h-52 w-52 bg-orange-600">
-        Facil
-      </div>
-      <div class="medium flex-1 h-52 w-52 bg-slate-700">
-        Intermedio
-      </div>
-      <div class="hard flex-1 h-52 w-52 bg-fuchsia-500">
-        Dificil
-      </div>
+    <div v-if="!difficultyStore.difficulty"
+      class="max-w-screen-md flex gap-1 px-2 mx-auto justify-center font-semibold w-full h-full">
+      <Vignette v-for="difficulty in difficultyLevels" @on-click="selectDificulty" :label="difficulty.label"
+        :difficulty="difficulty.name" :class="difficulty.name" :image="difficulty.image" />
     </div>
     <div v-if="difficultyStore.difficulty" class="flex gap-1 px-2 mx-auto justify-center font-semibold w-full h-full">
       <BoardView :difficulty="difficultyStore.difficulty" />
