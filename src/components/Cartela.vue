@@ -7,7 +7,7 @@ const props = defineProps({
 
 <template>
     <div
-        :class="`${props.className} p-1 w-full h-full shadow-[-2px_2px_1px_1px_black] bg-[#FFDE00] font-semibold border-neutral-900 border-solid border-2 uppercase`">
+        :class="`${props.className} p-1 text-slate-900 w-full h-full shadow-[-2px_2px_1px_1px_black] bg-[#FFDE00] font-semibold border-neutral-900 border-solid border-2 uppercase`">
         {{ props.name }}
     </div>
 </template>

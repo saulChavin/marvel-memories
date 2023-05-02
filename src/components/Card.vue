@@ -20,7 +20,7 @@ const props = defineProps({
 
         <div class="front-side rounded-xl overflow-hidden relative" v-if="flipped">
             <img :src="props.frontImage" />
-            <span class="absolute bottom-0">
+            <span class="absolute bottom-1">
                 <Cartela :name="name" />
             </span>
 
