@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import type { CharacterCard } from '@/interface/Characters';
 import Cartela from './Cartela.vue';
 
-const emit = defineEmits<{
+defineEmits<{
     (e: 'onClick', card: { flipped: boolean, id: number, index: number }): void
 }>()
 const props = defineProps({

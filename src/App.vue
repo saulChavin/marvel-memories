@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import HeaderMenu from '@/components/HeaderMenu.vue';
-import Button from '@/components/Button.vue';
 import BoardView from './views/BoardView.vue';
 import { useSettingsStore } from './stores/settings'
 import Vignette from './components/Vignette.vue';

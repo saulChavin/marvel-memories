@@ -30,7 +30,7 @@ const initGame = async (gameDifficulty: difficultyType) => {
     characters.value = flipAllCards(shuffleCards(charactersRes), true);
     setTimeout(() => {
         characters.value = flipAllCards(characters.value, false);
-    }, 2000)
+    }, 3000)
 }
 
 const shuffleCards = (cards: any[]) => {
