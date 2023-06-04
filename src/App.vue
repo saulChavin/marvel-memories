@@ -31,10 +31,10 @@ const selectDificulty = (difficulty: "easy" | "medium" | "hard") => {
 </script>
  
 <template>
-  <header class="w-full">
+  <header class="w-full flex items-end">
     <HeaderMenu />
   </header>
-  <main class="container mx-auto relative h-fit flex flex-1 flex-col gap-1">
+  <main class="container mx-auto relative h-fit flex flex-col gap-1">
     <div v-if="!difficultyStore.difficulty"
       class="max-w-screen-md flex gap-1 px-2 mx-auto justify-center font-semibold w-full h-full">
       <Vignette v-for="difficulty in difficultyLevels" @on-click="selectDificulty" :label="difficulty.label"
@@ -80,6 +80,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 100%;
 }
 </style>
