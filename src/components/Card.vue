@@ -15,30 +15,37 @@ const props = defineProps({
 </script>
 
 <template>
-    <div @click="$emit('onClick', { index, flipped, id })"
-        class="card box-si flex flex-col shadow-xl rounded-xl max-w-[100px] w-full min-h-[150px]">
-
-        <div class="front-side rounded-xl overflow-hidden relative" v-if="flipped">
-            <img :src="props.frontImage" />
-            <span class="absolute bottom-1">
-                <Cartela :name="name" />
-            </span>
-
-        </div>
-        <div v-if="!flipped"
-            class="flex flex-col flex-1 bg-gradient-to-r from-[#ed1d24] via-red-500 to-[#ce5cd8] p-1 rounded-xl">
-            <div class=" flex flex-1 justify-center items-center bg-[#252526] rounded-lg">
-                <img src="@/assets/marvel_white.webp" />
+    <div class="card" :class="{ flipped: flipped }" @click="$emit('onClick', { index, flipped, id })">
+        <div class="card-container" :class="{ flipped: flipped }">
+            <div class="front-side bg-gradient-to-r from-[#ed1d24] via-red-500 to-[#ce5cd8] p-1 rounded-xl">
+                <div class=" flex flex-1 justify-center items-center bg-[#252526] rounded-lg">
+                    <img src="@/assets/marvel_white.webp" />
+                </div>
             </div>
-        </div>
+            <div class="back-side rounded-xl overflow-hidden">
+                <img :src="props.frontImage" />
+                <span class="absolute bottom-1">
+                    <Cartela :name="name" />
+                </span>
+            </div>
 
+        </div>
     </div>
 </template>
 
 <style scoped>
 .card {
-    transition: scale ease 0.2s;
-    box-sizing: border-box;
+    width: 96px;
+    height: 144px;
+}
+
+.card-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: center;
+    transform-style: preserve-3d;
+    transition: transform ease .3s;
 }
 
 .card:hover {
@@ -46,39 +53,26 @@ const props = defineProps({
     cursor: pointer;
 }
 
-.front-side {
-    min-width: 94.5px;
-    min-height: 141.75px;
-    max-width: 168px;
-    max-height: 252px;
+.front-side,
+.back-side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* transform: rotateY(0deg); */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.flipped .card-container {
+    transform: rotateY(180deg);
 }
 
 .back-side {
-    /* background-color: #252526; */
-    min-width: 94.5px;
-    min-height: 141.75px;
-    max-width: 168px;
-    max-height: 252px;
-    /* border-radius: 16px; */
-    /* outline: 4px solid #ed1d24c5; */
-    /* outline-offset: -4px; */
-}
-
-.back-side img {
-    width: 80%;
-}
-
-/* .card .front-side {
     transform: rotateY(180deg);
-    backface-visibility: hidden;
-    transition: transform .4s linear;
 }
-
-.card .back-side {
-    transform: rotateY(0deg);
-    backface-visibility: hidden;
-    transition: transform .4s linear;
-} */
 
 /* 
 .card:hover .front-side {
