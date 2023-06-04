@@ -13,7 +13,7 @@ const settingsStore = useSettingsStore();
                 Jugar de nuevo
             </button>
         </div>
-        <h1 class="text-4xl text-slate-100" v-else>
+        <h1 class="text-4xl text-slate-100 uppercase font-bold text-center" v-else>
             Marvel Memories
         </h1>
     </div>

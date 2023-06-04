@@ -72,14 +72,4 @@ const props = defineProps({
 .back-side {
     transform: rotateY(180deg);
 }
-
-/* 
-.card:hover .front-side {
-    transform: rotateY(0deg);
-    cursor: pointer;
-}
-.card:hover .back-side {
-    transform: rotateY(180deg);
-    cursor: pointer;
-} */
 </style>
