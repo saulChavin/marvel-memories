@@ -72,7 +72,6 @@ body {
   background-color: #2d2d30;
   margin: 0;
   padding: 0;
-  font-family: 'Comic Neue';
 }
 
 #app {

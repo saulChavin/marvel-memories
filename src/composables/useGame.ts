@@ -6,12 +6,14 @@ import { useSettingsStore } from '@/stores/settings';
 import type { difficultyType } from '@/interface/Game';
 //@ts-ignore
 import confetti from "https://cdn.skypack.dev/canvas-confetti";
+import { useScoreStore } from '@/stores/score';
 
 export default function useGame() {
     const characters = ref<CharacterCard[]>([]);
     const selectedCards = ref<{ id: number, index: number }[]>([]);
     const matchedCards = ref<{ id: number, index: number }[]>([]);
     const settingsStore = useSettingsStore();
+    const scoreStore = useScoreStore();
 
     const initGame = async (gameDifficulty: difficultyType) => {
         const limit = getNumberOfCards(gameDifficulty);
@@ -34,6 +36,7 @@ export default function useGame() {
             flipCard(index, !flipped);
         }
         if (selectedCards.value.length === 2) {
+            scoreStore.incrementMoves();
             if (selectedCards.value[0].id !== selectedCards.value[1].id) {
                 setTimeout(() => {
                     selectedCards.value.forEach(selected => {

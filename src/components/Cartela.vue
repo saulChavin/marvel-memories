@@ -13,6 +13,10 @@ const props = defineProps({
 </template>
 
 <style scoped>
+p {
+    font-family: 'Comic Neue';
+}
+
 .clamp-font {
     font-size: clamp(0.5rem, 1.7vw, 1rem);
     display: -webkit-box;

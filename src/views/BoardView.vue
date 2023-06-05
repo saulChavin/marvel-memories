@@ -19,7 +19,7 @@ onMounted(() => {
 
 <template>
     <div class="w-full max-w-[640px] mx-auto">
-        <ul class="flex flex-wrap gap-4 justify-center">
+        <ul class="flex flex-wrap gap-4 justify-between">
             <li class="" v-for="{ name, id, thumbnail: { path, extension }, flipped }, index in characters" :key="id">
                 <Card @on-click="selectCard" :front-image="`${path}/${VARIANT}.${extension}`" :flipped="flipped" :id="id"
                     :index="index" :name="name" />
